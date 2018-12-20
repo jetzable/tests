@@ -1,5 +1,5 @@
 <template>
-	<div class="column is-one-third">
+	<div class="column">
 		<div class="select-title">
 			<div class="icon companies"></div>
 			<h4>Empresas</h4>
@@ -35,15 +35,15 @@
 							<div class="d-block" v-if="company.clave !== null">RFC: {{company.companyKey}}</div>
 						</span>
 					</div>
-					<a class="fas fa-question-circle" @click="showRequest = true"></a>
+					<a class="fas fa-question-circle" @click></a>
 				</button>
-				<div class="request" :class="{'show': showRequest}">
+				<!-- <div class="request" :class="{'show': showRequest}">
 					<a class="fas fa-question-circle" @click="showRequest = false"></a>
 					<p>¿Solicitar permiso para la Tienda {{company.companyKey}}?</p>
 					<div>
 						<button class="button is-small is-bank">solicitar</button>
 					</div>
-				</div>
+				</div>-->
 			</div>
 		</div>
 	</div>
@@ -57,7 +57,7 @@
 				showRequest: false
 			};
 		},
-		props: ["companies", "onClick"]
+		props: ["companies", "onClick", "toggleRequest", "requestState"]
 	};
 </script>
 
