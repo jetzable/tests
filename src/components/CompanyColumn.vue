@@ -35,7 +35,7 @@
 							<div class="d-block" v-if="company.clave !== null">RFC: {{company.companyKey}}</div>
 						</span>
 					</div>
-					<a class="fas fa-question-circle" @click></a>
+					<a class="fas fa-question-circle"></a>
 				</button>
 				<!-- <div class="request" :class="{'show': showRequest}">
 					<a class="fas fa-question-circle" @click="showRequest = false"></a>
