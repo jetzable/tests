@@ -63,7 +63,7 @@
 				showBranches: true,
 				showLocations: true,
 				branchSelected: [],
-				locationsSelected: {},
+				locationsSelected: [],
 				companies: [
 					{
 						id: 1,

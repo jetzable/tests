@@ -52,7 +52,7 @@
 		name: "locations",
 		props: {
 			locations: {
-				type: Object,
+				type: Array,
 				required: true
 			},
 			showRequest: {
