@@ -17,9 +17,15 @@
 					<div class="d-block" v-if="company.clave !== null">RFC: {{company.companyKey}}</div>
 				</span>
 			</div>
-			<a class="fas fa-question-circle" @click.prevent="showHiddenRequest"></a>
-			<Request :class="{'show': showRequest}"/>
+			<a class="fas fa-question-circle" @click.prevent="activeRequest(company.id)"></a>
 		</button>
+		<Request
+			v-if="company.id === idRequest"
+			class="request"
+			:class="{'show': questionState}"
+			:inactiveRequest="activeRequest"
+			:companyInfo="company"
+		/>
 	</div>
 </template>
 
@@ -32,18 +38,23 @@
 			Request
 		},
 		data() {
-			return {
-				showRequest: false
-			};
-		},
-		methods: {
-			showHiddenRequest() {
-				this.showRequest = !this.showRequest;
-			}
+			return {};
 		},
 		props: {
 			company: {
 				type: Object,
+				required: true
+			},
+			questionState: {
+				type: Boolean,
+				required: true
+			},
+			activeRequest: {
+				type: Function,
+				required: true
+			},
+			idRequest: {
+				type: Number,
 				required: true
 			}
 		}

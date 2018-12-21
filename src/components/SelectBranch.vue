@@ -5,22 +5,23 @@
 				class="is-one-third"
 				:activeItem="activeCompanies"
 				:inactiveItem="inactiveCompanies"
+				:showRequest="showHiddenRequest"
 				:onClick="handleBranchSelected"
+				:requestState="showRequest"
+				:idRequest="idRequest"
 			/>
 			<BranchColumn
 				class="is-one-third"
 				:branches="branchSelected"
 				:class="{'is-hidden': showBranches}"
-				:showRequest="handleShowRequest"
-				:requestState="requestHidden"
+				:showRequest="showHiddenRequest"
 				:selectLocation="handleLocationSelected"
 			/>
 			<Locations
 				class="is-one-third"
 				:class="{'is-hidden': showLocations}"
 				:locations="locationsSelected"
-				:showRequest="handleShowRequest"
-				:requestState="requestHidden"
+				:showRequest="showHiddenRequest"
 			/>
 		</div>
 	</div>
@@ -62,14 +63,18 @@
 				});
 				console.log(this.activeCompanies);
 			},
-			handleShowRequest() {}
+			showHiddenRequest(id) {
+				this.idRequest = id;
+				this.showRequest = !this.showRequest;
+			}
 		},
 		created() {
 			this.handleActiveCompanies();
 		},
 		data() {
 			return {
-				requestHidden: true,
+				idRequest: 0,
+				showRequest: false,
 				showBranches: true,
 				showLocations: true,
 				branchSelected: [],

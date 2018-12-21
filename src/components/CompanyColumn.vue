@@ -11,7 +11,12 @@
 		</div>
 		<div v-for="item in inactiveItem" :key="item.id">
 			<div>
-				<InactiveItem :company="item"/>
+				<InactiveItem
+					:company="item"
+					:questionState="requestState"
+					:activeRequest="showRequest"
+					:idRequest="idRequest"
+				/>
 			</div>
 		</div>
 	</div>
@@ -38,6 +43,18 @@
 			},
 			onClick: {
 				type: Function,
+				required: true
+			},
+			showRequest: {
+				type: Function,
+				required: true
+			},
+			requestState: {
+				type: Boolean,
+				required: true
+			},
+			idRequest: {
+				type: Number,
 				required: true
 			}
 		}
