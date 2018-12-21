@@ -3,10 +3,9 @@
 		<div class="columns">
 			<CompanyColumn
 				class="is-one-third"
-				:companies="companies"
+				:activeItem="activeCompanies"
+				:inactiveItem="inactiveCompanies"
 				:onClick="handleBranchSelected"
-				:showRequest="handleShowRequest"
-				:requestState="requestHidden"
 			/>
 			<BranchColumn
 				class="is-one-third"
@@ -53,17 +52,30 @@
 				this.locationsSelected = locations;
 				this.showLocations = !this.showLocations;
 			},
-			handleShowRequest() {
-				this.requestHidden = !this.requestHidden;
-			}
+			handleActiveCompanies() {
+				this.companies.forEach(company => {
+					if (company.active) {
+						this.activeCompanies.push(company);
+					} else {
+						this.inactiveCompanies.push(company);
+					}
+				});
+				console.log(this.activeCompanies);
+			},
+			handleShowRequest() {}
+		},
+		created() {
+			this.handleActiveCompanies();
 		},
 		data() {
 			return {
-				requestHidden: false,
+				requestHidden: true,
 				showBranches: true,
 				showLocations: true,
 				branchSelected: [],
 				locationsSelected: [],
+				activeCompanies: [],
+				inactiveCompanies: [],
 				companies: [
 					{
 						id: 1,

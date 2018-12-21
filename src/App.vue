@@ -2,19 +2,19 @@
 	<div id="app">
 		<div>
 			<Input msg="Welcome to Your Vue.js App"/>
-			<SomeComponent/>
+			<Buttons/>
 		</div>
 	</div>
 </template>
 
 <script>
-	import SomeComponent from "./components/SomeComponent.vue";
+	import Buttons from "./components/Buttons.vue";
 	import Input from "./components/Input.vue";
 
 	export default {
 		name: "app",
 		components: {
-			SomeComponent,
+			Buttons,
 			Input
 		}
 	};

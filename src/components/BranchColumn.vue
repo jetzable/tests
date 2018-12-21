@@ -56,7 +56,7 @@
 		<div v-for="branch in branches" :key="branch.id" v-if="branch.type === 'office'">
 			<!-- Active Item -->
 			<div class="item" v-if="branch.active">
-				<button class="select-item">
+				<button class="select-item" @click="selectLocation(branch.locations)">
 					<div class="info">
 						<p>
 							{{branch.branchName}}
@@ -105,7 +105,7 @@
 		<div v-for="branch in branches" :key="branch.id" v-if="branch.type === 'store'">
 			<!-- Active item -->
 			<div class="item" v-if="branch.active">
-				<button class="select-item">
+				<button class="select-item" @click="selectLocation(branch.locations)">
 					<div class="info">
 						<p>
 							{{branch.branchName}}
