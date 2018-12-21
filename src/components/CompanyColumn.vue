@@ -35,29 +35,46 @@
 							<div class="d-block" v-if="company.clave !== null">RFC: {{company.companyKey}}</div>
 						</span>
 					</div>
-					<a class="fas fa-question-circle"></a>
+					<a class="fas fa-question-circle" @click="showRequest"></a>
 				</button>
-				<!-- <div class="request" :class="{'show': showRequest}">
-					<a class="fas fa-question-circle" @click="showRequest = false"></a>
+				<div class="request" :class="{'show': requestState}">
+					<a class="fas fa-question-circle" @click="showRequest"></a>
 					<p>¿Solicitar permiso para la Tienda {{company.companyKey}}?</p>
 					<div>
 						<button class="button is-small is-bank">solicitar</button>
 					</div>
-				</div>-->
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import Request from "@/components/Request.vue";
+
 	export default {
 		name: "company-column",
-		data() {
-			return {
-				showRequest: false
-			};
+		components: {
+			Request
 		},
-		props: ["companies", "onClick", "toggleRequest", "requestState"]
+		props: {
+			companies: {
+				type: Array,
+				required: true
+			},
+			onClick: {
+				type: Function,
+				required: true
+			},
+			showRequest: {
+				type: Function,
+				required: true
+			},
+			requestState: {
+				type: Boolean,
+				required: true
+			}
+		}
 	};
 </script>
 
