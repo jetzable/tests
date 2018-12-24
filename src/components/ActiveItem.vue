@@ -4,8 +4,8 @@
 			<p>
 				{{company.name}}
 				<span class="on"></span>
-				<span v-if="company.rfc !== null">RFC: {{company.rfc}}</span>
-				<span v-if="company.clave !== null">Clave: {{company.companyKey}}</span>
+				<span v-if="company.rfc">RFC: {{company.rfc}}</span>
+				<span v-if="company.key">Clave: {{company.key}}</span>
 			</p>
 		</div>
 	</button>

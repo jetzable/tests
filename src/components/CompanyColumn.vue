@@ -5,7 +5,7 @@
 			<h4>Empresas</h4>
 		</div>
 		<div v-for="item in activeItem" :key="item.id">
-			<div @click.prevent="onClick(item.id)">
+			<div @click.prevent="handleBranchSelected(item.id)">
 				<ActiveItem :company="item"/>
 			</div>
 		</div>
@@ -13,8 +13,8 @@
 			<div>
 				<InactiveItem
 					:company="item"
-					:questionState="requestState"
-					:activeRequest="showRequest"
+					:showRequest="showRequest"
+					:showHiddenRequest="showHiddenRequest"
 					:idRequest="idRequest"
 				/>
 			</div>
@@ -41,15 +41,15 @@
 				type: Array,
 				required: true
 			},
-			onClick: {
+			handleBranchSelected: {
+				type: Function,
+				required: true
+			},
+			showHiddenRequest: {
 				type: Function,
 				required: true
 			},
 			showRequest: {
-				type: Function,
-				required: true
-			},
-			requestState: {
 				type: Boolean,
 				required: true
 			},

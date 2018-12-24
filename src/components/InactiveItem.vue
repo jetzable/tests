@@ -13,17 +13,17 @@
 							</p>
 						</div>
 					</div>
-					<div class="d-block" v-if="company.rfc !== null">RFC: {{company.rfc}}</div>
-					<div class="d-block" v-if="company.clave !== null">RFC: {{company.companyKey}}</div>
+					<div class="d-block" v-if="company.rfc">RFC: {{company.rfc}}</div>
+					<div class="d-block" v-if="company.clave">RFC: {{company.key}}</div>
 				</span>
 			</div>
-			<a class="fas fa-question-circle" @click.prevent="activeRequest(company.id)"></a>
+			<a class="fas fa-question-circle" @click.prevent="showHiddenRequest(company.id)"></a>
 		</button>
 		<Request
 			v-if="company.id === idRequest"
 			class="request"
-			:class="{'show': questionState}"
-			:inactiveRequest="activeRequest"
+			:class="{'show': showRequest}"
+			:showHiddenRequest="showHiddenRequest"
 			:companyInfo="company"
 		/>
 	</div>
@@ -45,11 +45,11 @@
 				type: Object,
 				required: true
 			},
-			questionState: {
+			showRequest: {
 				type: Boolean,
 				required: true
 			},
-			activeRequest: {
+			showHiddenRequest: {
 				type: Function,
 				required: true
 			},

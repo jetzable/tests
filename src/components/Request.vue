@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<a class="fas fa-question-circle" @click.prevent="inactiveRequest"></a>
+		<a class="fas fa-question-circle" @click.prevent="showHiddenRequest"></a>
 		<p>¿Solicitar permiso para la Tienda {{companyInfo.name}}?</p>
 		<div>
 			<button class="button is-small is-bank">solicitar</button>
@@ -12,12 +12,12 @@
 	export default {
 		name: "request",
 		props: {
-			inactiveRequest: {
+			showHiddenRequest: {
 				type: Function,
 				required: true
 			},
 			companyInfo: {
-				type: String,
+				type: Object,
 				required: true
 			}
 		}

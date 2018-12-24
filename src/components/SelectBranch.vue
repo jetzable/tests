@@ -5,23 +5,29 @@
 				class="is-one-third"
 				:activeItem="activeCompanies"
 				:inactiveItem="inactiveCompanies"
-				:showRequest="showHiddenRequest"
-				:onClick="handleBranchSelected"
-				:requestState="showRequest"
+				:showHiddenRequest="showHiddenRequest"
+				:handleBranchSelected="handleBranchSelected"
+				:showRequest="showRequest"
 				:idRequest="idRequest"
 			/>
 			<BranchColumn
 				class="is-one-third"
-				:branches="branchSelected"
 				:class="{'is-hidden': showBranches}"
-				:showRequest="showHiddenRequest"
-				:selectLocation="handleLocationSelected"
+				:activeItem="activeBranches"
+				:inactiveItem="inactiveBranches"
+				:showRequest="showRequest"
+				:idRequest="idRequest"
+				:selectLocation="selectLocation"
+				:showHiddenRequest="showHiddenRequest"
 			/>
 			<Locations
 				class="is-one-third"
 				:class="{'is-hidden': showLocations}"
-				:locations="locationsSelected"
-				:showRequest="showHiddenRequest"
+				:activeItem="activeLocations"
+				:inactiveItem="inactiveLocations"
+				:showRequest="showRequest"
+				:idRequest="idRequest"
+				:showHiddenRequest="showHiddenRequest"
 			/>
 		</div>
 	</div>
@@ -44,13 +50,26 @@
 			handleBranchSelected(id) {
 				this.companies.forEach(company => {
 					if (company.id === id) {
-						this.branchSelected = company.branch;
+						company.branch.forEach(branch => {
+							if (branch.active) {
+								this.activeBranches.push(branch);
+							} else {
+								this.inactiveBranches.push(branch);
+							}
+						});
 					}
 				});
 				this.showBranches = !this.showBranches;
 			},
-			handleLocationSelected(locations) {
-				this.locationsSelected = locations;
+			selectLocation(locations) {
+				console.log(locations);
+				locations.forEach(location => {
+					if (location.active) {
+						this.activeLocations.push(location);
+					} else {
+						this.inactiveLocations.push(location);
+					}
+				});
 				this.showLocations = !this.showLocations;
 			},
 			handleActiveCompanies() {
@@ -77,8 +96,10 @@
 				showRequest: false,
 				showBranches: true,
 				showLocations: true,
-				branchSelected: [],
-				locationsSelected: [],
+				activeBranches: [],
+				inactiveBranches: [],
+				activeLocations: [],
+				inactiveLocations: [],
 				activeCompanies: [],
 				inactiveCompanies: [],
 				companies: [
@@ -86,23 +107,23 @@
 						id: 1,
 						name: "no patito S.A de C.V",
 						rfc: "POASHF12434",
-						clave: null,
+						key: null,
 						active: true,
 						branch: [
 							{
 								id: 11,
-								branchName: "kakakaka EDOMEX",
-								branchKey: "12408416",
+								name: "kakakaka EDOMEX",
+								key: "12408416",
 								active: false,
 								type: "wharehouse",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -110,18 +131,18 @@
 							},
 							{
 								id: 12,
-								branchName: "Almacén 2",
-								branchKey: "0984728",
+								name: "Almacén 2",
+								key: "0984728",
 								active: true,
 								type: "wharehouse",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -129,18 +150,18 @@
 							},
 							{
 								id: 13,
-								branchName: "Oficina 1",
-								branchKey: "98730290",
+								name: "Oficina 1",
+								key: "98730290",
 								active: true,
 								type: "office",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -148,18 +169,18 @@
 							},
 							{
 								id: 14,
-								branchName: "Oficina 2",
-								branchKey: "73933826",
+								name: "Oficina 2",
+								key: "73933826",
 								active: false,
 								type: "office",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -167,18 +188,18 @@
 							},
 							{
 								id: 15,
-								branchName: "Tienda 1",
-								branchKey: "7261839",
+								name: "Tienda 1",
+								key: "7261839",
 								active: true,
 								type: "store",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -186,18 +207,18 @@
 							},
 							{
 								id: 16,
-								branchName: "Tienda 2",
-								branchKey: "7261839",
+								name: "Tienda 2",
+								key: "7261839",
 								active: false,
 								type: "store",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -209,23 +230,23 @@
 						id: 2,
 						name: "Empresa no patito S.A de C.V",
 						rfc: "POASHF12434",
-						clave: null,
+						key: null,
 						active: false,
 						branch: [
 							{
 								id: 21,
-								branchName: "Almacén EDOMEX",
-								branchKey: "8272030",
+								name: "Almacén EDOMEX",
+								key: "8272030",
 								active: false,
 								type: "wharehouse",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -233,18 +254,18 @@
 							},
 							{
 								id: 22,
-								branchName: "Almacén knxxn",
-								branchKey: "1513135",
+								name: "Almacén knxxn",
+								key: "1513135",
 								active: true,
 								type: "wharehouse",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -252,18 +273,18 @@
 							},
 							{
 								id: 23,
-								branchName: "Oficina sdjnojnel",
-								branchKey: "7283089",
+								name: "Oficina sdjnojnel",
+								key: "7283089",
 								active: true,
 								type: "office",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -271,18 +292,18 @@
 							},
 							{
 								id: 24,
-								branchName: "Oficina jnsuenek",
-								branchKey: "73933826",
+								name: "Oficina jnsuenek",
+								key: "73933826",
 								active: false,
 								type: "office",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -290,18 +311,18 @@
 							},
 							{
 								id: 25,
-								branchName: "Tienda jjajakai",
-								branchKey: "7261839",
+								name: "Tienda jjajakai",
+								key: "7261839",
 								active: false,
 								type: "store",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -309,18 +330,18 @@
 							},
 							{
 								id: 26,
-								branchName: "Tienda 2",
-								branchKey: "7261839",
+								name: "Tienda 2",
+								key: "7261839",
 								active: true,
 								type: "store",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -337,18 +358,18 @@
 						branch: [
 							{
 								id: 31,
-								branchName: "Almacén del EDOMEX",
-								branchKey: "12408416",
+								name: "Almacén del EDOMEX",
+								key: "12408416",
 								active: false,
 								type: "wharehouse",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -356,18 +377,18 @@
 							},
 							{
 								id: 32,
-								branchName: "Almacén 2",
-								branchKey: "0984728",
+								name: "Almacén 2",
+								key: "0984728",
 								active: true,
 								type: "wharehouse",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -375,18 +396,18 @@
 							},
 							{
 								id: 33,
-								branchName: "Oficina iii",
-								branchKey: "98730290",
+								name: "Oficina iii",
+								key: "98730290",
 								active: true,
 								type: "office",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -394,18 +415,18 @@
 							},
 							{
 								id: 34,
-								branchName: "Oficina 2",
-								branchKey: "73933826",
+								name: "Oficina 2",
+								key: "73933826",
 								active: false,
 								type: "office",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -413,18 +434,18 @@
 							},
 							{
 								id: 35,
-								branchName: "Tienda primero",
-								branchKey: "7261839",
+								name: "Tienda primero",
+								key: "7261839",
 								active: false,
 								type: "store",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}
@@ -432,18 +453,18 @@
 							},
 							{
 								id: 36,
-								branchName: "Tienda 2",
-								branchKey: "7261839",
+								name: "Tienda 2",
+								key: "7261839",
 								active: true,
 								type: "store",
 								locations: [
 									{
-										address: "Montevideo",
+										name: "Montevideo",
 										key: "93870983",
 										active: true
 									},
 									{
-										address: "Calzada de Guadalupe CDMX",
+										name: "Calzada de Guadalupe CDMX",
 										key: "12408416",
 										active: false
 									}

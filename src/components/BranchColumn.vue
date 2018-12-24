@@ -5,45 +5,19 @@
 			<div class="icon warehouses"></div>
 			<h4>Almacenes</h4>
 		</div>
-		<div v-for="branch in branches" :key="branch.id" v-if="branch.type === 'wharehouse'">
-			<!-- Active item -->
-			<div class="item" v-if="branch.active">
-				<button class="select-item" @click="selectLocation(branch.locations)">
-					<div class="info">
-						<p>
-							{{branch.branchName}}
-							<span>Clave: {{branch.branchKey}}</span>
-						</p>
-					</div>
-				</button>
+		<div v-for="branch in activeItem" :key="branch.id">
+			<div v-if="branch.type === 'wharehouse'" @click="selectLocation(branch.locations)">
+				<ActiveItem :company="branch"/>
 			</div>
-			<!-- Inactive item -->
-			<div class="item" v-if="!branch.active">
-				<button class="select-item" disabled>
-					<div class="info">
-						<span>
-							{{branch.branchName}}
-							<div class="popover_wrapper">
-								<i class="fas fa-lock-alt"></i>
-								<div class="push popover_content up">
-									<p class="popover_message">
-										No tienes
-										<strong>permiso</strong> para modificar la información
-									</p>
-								</div>
-							</div>
-							<div class="d-block">Clave: {{branch.branchKey}}</div>
-						</span>
-					</div>
-					<a class="fas fa-question-circle" @click="showRequest"></a>
-				</button>
-				<div class="request" :class="{'show': requestState}">
-					<a class="fas fa-question-circle" @click="showRequest"></a>
-					<p>¿Solicitar permiso para la Tienda {{branch.branchKey}}?</p>
-					<div>
-						<button class="button is-small is-bank">solicitar</button>
-					</div>
-				</div>
+		</div>
+		<div v-for="branch in inactiveItem" :key="branch.id">
+			<div v-if="branch.type === 'wharehouse'">
+				<InactiveItem
+					:company="branch"
+					:showRequest="showRequest"
+					:showHiddenRequest="showHiddenRequest"
+					:idRequest="idRequest"
+				/>
 			</div>
 		</div>
 		<hr>
@@ -53,114 +27,74 @@
 			<div class="icon offices"></div>
 			<h4>Oficinas</h4>
 		</div>
-		<div v-for="branch in branches" :key="branch.id" v-if="branch.type === 'office'">
-			<!-- Active Item -->
-			<div class="item" v-if="branch.active">
-				<button class="select-item" @click="selectLocation(branch.locations)">
-					<div class="info">
-						<p>
-							{{branch.branchName}}
-							<span class="on"></span>
-							<span>Clave: {{branch.branchKey}}</span>
-						</p>
-					</div>
-				</button>
-			</div>
-			<!-- Inactive Item -->
-			<div class="item" v-if="!branch.active">
-				<button class="select-item" disabled>
-					<div class="info">
-						<span>
-							{{branch.branchName}}
-							<div class="popover_wrapper">
-								<i class="fas fa-lock-alt"></i>
-								<div class="push popover_content up">
-									<p class="popover_message">
-										No tienes
-										<strong>permiso</strong> para modificar la información
-									</p>
-								</div>
-							</div>
-							<div class="d-block">Clave: {{branch.branchKey}}</div>
-						</span>
-					</div>
-					<a class="fas fa-question-circle" @click="showRequest"></a>
-				</button>
-				<div class="request" :class="{'show': requestState}">
-					<a class="fas fa-question-circle" @click="showRequest"></a>
-					<p>¿Solicitar permiso para la Tienda #{{branch.branchKey}}?</p>
-					<div>
-						<button class="button is-small is-bank">solicitar</button>
-					</div>
-				</div>
+		<div v-for="branch in activeItem" :key="branch.id">
+			<div v-if="branch.type === 'office'" @click="selectLocation(branch.locations)">
+				<ActiveItem :company="branch"/>
 			</div>
 		</div>
-		<hr>
+		<div v-for="branch in inactiveItem" :key="branch.id">
+			<div v-if="branch.type === 'office'">
+				<InactiveItem
+					:company="branch"
+					:showRequest="showRequest"
+					:showHiddenRequest="showHiddenRequest"
+					:idRequest="idRequest"
+				/>
+			</div>
+		</div>
 
 		<!-- STORES -->
 		<div class="select-title">
 			<div class="icon stores"></div>
 			<h4>Tiendas</h4>
 		</div>
-		<div v-for="branch in branches" :key="branch.id" v-if="branch.type === 'store'">
-			<!-- Active item -->
-			<div class="item" v-if="branch.active">
-				<button class="select-item" @click="selectLocation(branch.locations)">
-					<div class="info">
-						<p>
-							{{branch.branchName}}
-							<span class="on"></span>
-							<span>Clave: {{branch.branchKey}}</span>
-						</p>
-					</div>
-				</button>
+		<div v-for="branch in activeItem" :key="branch.id">
+			<div v-if="branch.type === 'store'" @click="selectLocation(branch.locations)">
+				<ActiveItem :company="branch"/>
 			</div>
-			<!-- Inactive item -->
-			<div class="item" v-if="!branch.active">
-				<button class="select-item" disabled>
-					<div class="info">
-						<span>
-							{{branch.branchName}}
-							<div class="popover_wrapper">
-								<i class="fas fa-lock-alt"></i>
-								<div class="push popover_content up">
-									<p class="popover_message">
-										No tienes
-										<strong>permiso</strong> para modificar la información
-									</p>
-								</div>
-							</div>
-							<div class="d-block">Clave: {{branch.branchKey}}</div>
-						</span>
-					</div>
-					<a class="fas fa-question-circle" @click="showRequest"></a>
-				</button>
-				<div class="request" :class="{'show': requestState}">
-					<a class="fas fa-question-circle" @click="showRequest"></a>
-					<p>¿Solicitar permiso para la Tienda {{branch.branchKey}}?</p>
-					<div>
-						<button class="button is-small is-bank">solicitar</button>
-					</div>
-				</div>
+		</div>
+		<div v-for="branch in inactiveItem" :key="branch.id">
+			<div v-if="branch.type === 'store'">
+				<InactiveItem
+					:company="branch"
+					:showRequest="showRequest"
+					:showHiddenRequest="showHiddenRequest"
+					:idRequest="idRequest"
+				/>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import ActiveItem from "@/components/ActiveItem.vue";
+	import InactiveItem from "@/components/InactiveItem.vue";
+
 	export default {
 		name: "branch-column",
+		components: {
+			ActiveItem,
+			InactiveItem
+		},
 		props: {
-			branches: {
+			activeItem: {
 				type: Array,
 				required: true
 			},
-			showRequest: {
+			inactiveItem: {
+				type: Array,
+				required: true
+			},
+			showHiddenRequest: {
 				type: Function,
 				required: true
 			},
-			requestState: {
+			showRequest: {
 				type: Boolean,
+				required: true
+			},
+			idRequest: {
+				type: Number,
 				required: true
 			},
 			selectLocation: {
