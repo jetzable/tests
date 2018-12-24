@@ -9,6 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "dom-testing-library": "^3.16.1",
     "vue": "^2.5.17"
   },
   "devDependencies": {

@@ -1,5 +1,10 @@
 <template>
 	<div class="select-branch">
+		<!-- <div class="outer-20-b">
+			<a @click.prevent="handleCloseColumn">
+				<i class="fas fa-chevron-left"></i> Regresar
+			</a>
+		</div>-->
 		<div class="columns">
 			<CompanyColumn
 				class="is-one-third"
@@ -62,7 +67,6 @@
 				this.showBranches = !this.showBranches;
 			},
 			selectLocation(locations) {
-				console.log(locations);
 				locations.forEach(location => {
 					if (location.active) {
 						this.activeLocations.push(location);
@@ -80,11 +84,17 @@
 						this.inactiveCompanies.push(company);
 					}
 				});
-				console.log(this.activeCompanies);
 			},
 			showHiddenRequest(id) {
 				this.idRequest = id;
 				this.showRequest = !this.showRequest;
+			},
+			handleCloseColumn() {
+				if (!this.showLocations) {
+					this.showLocations = true;
+				} else if (!this.showBranches) {
+					this.showBranches = true;
+				}
 			}
 		},
 		created() {
@@ -207,6 +217,129 @@
 							},
 							{
 								id: 16,
+								name: "Tienda 2",
+								key: "7261839",
+								active: false,
+								type: "store",
+								locations: [
+									{
+										name: "Montevideo",
+										key: "93870983",
+										active: true
+									},
+									{
+										name: "Calzada de Guadalupe CDMX",
+										key: "12408416",
+										active: false
+									}
+								]
+							}
+						]
+					},
+					{
+						id: 4,
+						name: "tito S.A de C.V",
+						rfc: "POASHF12434",
+						key: null,
+						active: true,
+						branch: [
+							{
+								id: 41,
+								name: "kakakaka EDOMEX",
+								key: "12408416",
+								active: false,
+								type: "wharehouse",
+								locations: [
+									{
+										name: "Montevideo",
+										key: "93870983",
+										active: true
+									},
+									{
+										name: "Calzada de Guadalupe CDMX",
+										key: "12408416",
+										active: false
+									}
+								]
+							},
+							{
+								id: 42,
+								name: "Almacén 2",
+								key: "0984728",
+								active: true,
+								type: "wharehouse",
+								locations: [
+									{
+										name: "Montevideo",
+										key: "93870983",
+										active: true
+									},
+									{
+										name: "Calzada de Guadalupe CDMX",
+										key: "12408416",
+										active: false
+									}
+								]
+							},
+							{
+								id: 43,
+								name: "Oficina 1",
+								key: "98730290",
+								active: true,
+								type: "office",
+								locations: [
+									{
+										name: "Montevideo",
+										key: "93870983",
+										active: true
+									},
+									{
+										name: "Calzada de Guadalupe CDMX",
+										key: "12408416",
+										active: false
+									}
+								]
+							},
+							{
+								id: 44,
+								name: "Oficina 2",
+								key: "73933826",
+								active: false,
+								type: "office",
+								locations: [
+									{
+										name: "Montevideo",
+										key: "93870983",
+										active: true
+									},
+									{
+										name: "Calzada de Guadalupe CDMX",
+										key: "12408416",
+										active: false
+									}
+								]
+							},
+							{
+								id: 45,
+								name: "Tienda 1",
+								key: "7261839",
+								active: true,
+								type: "store",
+								locations: [
+									{
+										name: "Montevideo",
+										key: "93870983",
+										active: true
+									},
+									{
+										name: "Calzada de Guadalupe CDMX",
+										key: "12408416",
+										active: false
+									}
+								]
+							},
+							{
+								id: 46,
 								name: "Tienda 2",
 								key: "7261839",
 								active: false,

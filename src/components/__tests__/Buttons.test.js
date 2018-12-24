@@ -1,27 +1,57 @@
 import {
-  mount
-} from "@vue/test-utils";
+  createLocalVue,
+  mount,
+} from '@vue/test-utils';
+import {
+  getQueriesForElement,
+  prettyDOM,
+  wait,
+  fireEvent,
+} from 'dom-testing-library';
 
-import Buttons from "@/components/Buttons.vue";
+import Buttons from '@/components/Buttons.vue';
 
-describe("Buttons.vue", () => {
-  const wrapper = mount(Buttons);
-  it("It has buttons", () => {
-    const buttons = wrapper.findAll(".button");
-    expect(buttons.length).toBe(2);
+function render(component, options) {
+  const localVue = createLocalVue();
+  const wrapper = mount(component, {
+    localVue,
+    attachToDocument: true,
+    ...options
   });
-  it("First button has class is-report and has text 'Cancelado'", () => {
-    const button = wrapper.find("a:first-child");
-    expect(button.classes("is-report")).toBe(true);
-    expect(button.text()).toBe("Cancelado");
+
+  return {
+    wrapper,
+    ...getQueriesForElement(wrapper.element),
+    debug: () => console.log(prettyDOM(wrapper.element))
+  };
+}
+
+describe('Buttons', () => {
+  it('renders slot correctly', () => {
+    const buttonText = 'Menu';
+    const options = {
+      slots: {
+        default: buttonText
+      }
+    };
+    const {
+      getByText
+    } = render(Buttons, options);
+    expect(getByText(buttonText)).toBeTruthy();
   });
-  it("Last button has class is-income and is-outlined", () => {
-    const button = wrapper.find("a:last-child");
-    expect(button.classes("is-income")).toBe(true);
-    expect(button.classes("is-outlined")).toBe(true);
+  it('emits a click event when clicked', async () => {
+    const buttonText = 'Menu';
+    const options = {
+      slots: {
+        default: buttonText
+      }
+    };
+    const {
+      getByText,
+      wrapper
+    } = render(Buttons, options);
+    const button = getByText(buttonText);
+    await fireEvent.click(button);
+    expect(wrapper.emitted()).toBeTruthy();
   });
-  it("Button change from disabled to valid when input has a valid input", () => {
-    const button = wrapper.find("a:last-child");
-    expect(button.classes("disabled")).toBe(true);
-  });
-});
+})
